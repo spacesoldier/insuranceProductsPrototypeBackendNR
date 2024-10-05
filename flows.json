@@ -1738,7 +1738,7 @@
         "y": 1680,
         "wires": [
             [
-                "bb1c2bc45d93455e"
+                "04f35c0d4040e8df"
             ]
         ]
     },
@@ -1761,7 +1761,7 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "http://strcmsv4:1337/api/orders/{{{orderId}}}",
+        "url": "http://strcmsv4:1337/api/orders{{{queryString}}}",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -1809,7 +1809,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 660,
-        "y": 1820,
+        "y": 1860,
         "wires": []
     },
     {
@@ -1845,61 +1845,6 @@
         "x": 1100,
         "y": 1900,
         "wires": []
-    },
-    {
-        "id": "bb1c2bc45d93455e",
-        "type": "change",
-        "z": "f4d873b0b812eae0",
-        "name": "save original request in msg envelope",
-        "rules": [
-            {
-                "t": "set",
-                "p": "requestId",
-                "pt": "msg",
-                "to": "_msgid",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "original_req",
-                "pt": "msg",
-                "to": "req",
-                "tot": "msg",
-                "dc": true
-            },
-            {
-                "t": "set",
-                "p": "headers",
-                "pt": "msg",
-                "to": "{}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "headers.authorization",
-                "pt": "msg",
-                "to": "req.headers.authorization",
-                "tot": "msg",
-                "dc": true
-            },
-            {
-                "t": "delete",
-                "p": "req",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 550,
-        "y": 1720,
-        "wires": [
-            [
-                "46337a976850cd14"
-            ]
-        ]
     },
     {
         "id": "59e7eb9203f9a348",
@@ -2007,8 +1952,7 @@
         "y": 1760,
         "wires": [
             [
-                "47cb131eefeee2dd",
-                "91c517ee5b135557"
+                "edb7ce944e2b5784"
             ]
         ]
     },
@@ -2032,5 +1976,744 @@
                 "996406ae3945948d"
             ]
         ]
+    },
+    {
+        "id": "edb7ce944e2b5784",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "name": "set url query string",
+        "func": "const baseUrlStr = \"/api/v0/cms-orders\";\n\nlet urlStr = msg.original_req.url;\nlet queryString = urlStr.substring(\n    urlStr.indexOf(baseUrlStr)\n    +\n    baseUrlStr.length\n);\n\nmsg.queryString = queryString;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 1820,
+        "wires": [
+            [
+                "91c517ee5b135557",
+                "47cb131eefeee2dd"
+            ]
+        ]
+    },
+    {
+        "id": "04f35c0d4040e8df",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 1720,
+        "wires": [
+            [
+                "46337a976850cd14"
+            ]
+        ]
+    },
+    {
+        "id": "e3fe73e75550a61b",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/cms-orders",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 2140,
+        "wires": [
+            [
+                "b4ca3769025dcd27"
+            ]
+        ]
+    },
+    {
+        "id": "c5274de72d28de23",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "Post new order",
+        "info": "",
+        "x": 160,
+        "y": 2060,
+        "wires": []
+    },
+    {
+        "id": "b4ca3769025dcd27",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 2140,
+        "wires": [
+            [
+                "4f29c3e47cec1d39",
+                "d5b2929ef780a004"
+            ]
+        ]
+    },
+    {
+        "id": "4f29c3e47cec1d39",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/orders",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 850,
+        "y": 2140,
+        "wires": [
+            [
+                "4c221ae0d8dd230d"
+            ]
+        ]
+    },
+    {
+        "id": "4c221ae0d8dd230d",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1130,
+        "y": 2140,
+        "wires": [
+            [
+                "dddcb50a860b179f"
+            ]
+        ]
+    },
+    {
+        "id": "d5b2929ef780a004",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "d5863ee92f3f2502",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 28",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "dddcb50a860b179f",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1010,
+        "y": 2180,
+        "wires": [
+            [
+                "d5863ee92f3f2502",
+                "748d2c04bd15077d"
+            ]
+        ]
+    },
+    {
+        "id": "748d2c04bd15077d",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1390,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "8004d2171cc9288b",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/cms-orders/:orderid",
+        "method": "delete",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 2360,
+        "wires": [
+            [
+                "caab7b4c5a606821"
+            ]
+        ]
+    },
+    {
+        "id": "54b6a4466a4282a2",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "Delete order by id",
+        "info": "",
+        "x": 170,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "1cfc9514c0e9461a",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 2420,
+        "wires": [
+            [
+                "6f1b5d5adb6e67f3",
+                "81b56cbb43091fa9"
+            ]
+        ]
+    },
+    {
+        "id": "caab7b4c5a606821",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "orderId",
+                "pt": "msg",
+                "to": "req.params.orderid",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 2360,
+        "wires": [
+            [
+                "1cfc9514c0e9461a"
+            ]
+        ]
+    },
+    {
+        "id": "6f1b5d5adb6e67f3",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "DELETE",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/orders/{{{orderId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 850,
+        "y": 2340,
+        "wires": [
+            [
+                "f67b445ab4df9f70"
+            ]
+        ]
+    },
+    {
+        "id": "81b56cbb43091fa9",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 29",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "f67b445ab4df9f70",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 2340,
+        "wires": [
+            [
+                "1472aad9298a2c68"
+            ]
+        ]
+    },
+    {
+        "id": "1472aad9298a2c68",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1050,
+        "y": 2380,
+        "wires": [
+            [
+                "9a6d92229f3dcd11",
+                "83c71db97a388757"
+            ]
+        ]
+    },
+    {
+        "id": "83c71db97a388757",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1430,
+        "y": 2380,
+        "wires": []
+    },
+    {
+        "id": "9a6d92229f3dcd11",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 30",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 2420,
+        "wires": []
+    },
+    {
+        "id": "66b34c382c9a6cb7",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "Update order by id",
+        "info": "",
+        "x": 150,
+        "y": 2560,
+        "wires": []
+    },
+    {
+        "id": "63cb3e5c8b49543c",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/cms-orders/:orderid",
+        "method": "put",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 2640,
+        "wires": [
+            [
+                "c5ae5140a88cd75c"
+            ]
+        ]
+    },
+    {
+        "id": "c5ae5140a88cd75c",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "orderId",
+                "pt": "msg",
+                "to": "req.params.orderid",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 2640,
+        "wires": [
+            [
+                "85a3865c88a43ddd"
+            ]
+        ]
+    },
+    {
+        "id": "85a3865c88a43ddd",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 2680,
+        "wires": [
+            [
+                "8c8d7f95ff43a34a"
+            ]
+        ]
+    },
+    {
+        "id": "8c8d7f95ff43a34a",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "PUT",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/orders/{{{orderId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 870,
+        "y": 2640,
+        "wires": [
+            [
+                "338d808e7591fe50"
+            ]
+        ]
+    },
+    {
+        "id": "338d808e7591fe50",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1190,
+        "y": 2640,
+        "wires": [
+            [
+                "3423c2eb0800e670"
+            ]
+        ]
+    },
+    {
+        "id": "3423c2eb0800e670",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1070,
+        "y": 2680,
+        "wires": [
+            [
+                "5d6ca08716e06d68",
+                "40fe0b06d09c8ea5"
+            ]
+        ]
+    },
+    {
+        "id": "40fe0b06d09c8ea5",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1450,
+        "y": 2680,
+        "wires": []
+    },
+    {
+        "id": "5d6ca08716e06d68",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 31",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 2720,
+        "wires": []
     }
 ]
