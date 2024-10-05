@@ -1,0 +1,2036 @@
+[
+    {
+        "id": "8c5bfdbc4f9572a9",
+        "type": "tab",
+        "label": "pgtests",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f4d873b0b812eae0",
+        "type": "tab",
+        "label": "api v0",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3c6b3935308742a0",
+        "type": "postgreSQLConfig",
+        "name": "",
+        "host": "pgbouncer",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "hacker",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "hacker",
+        "userFieldType": "str",
+        "password": "megahack123",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "cd755bb7d6dec2d4",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "list schemas",
+        "query": "select distinct schemaname from pg_catalog.pg_tables;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 470,
+        "y": 180,
+        "wires": [
+            [
+                "4c97a43acbf8bc3e"
+            ]
+        ]
+    },
+    {
+        "id": "3c424ce635ec5445",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 180,
+        "wires": [
+            [
+                "cd755bb7d6dec2d4"
+            ]
+        ]
+    },
+    {
+        "id": "4c97a43acbf8bc3e",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "69310e1da87dcd44",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "create schema",
+        "query": "create schema if not exists beep_boop;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 520,
+        "y": 280,
+        "wires": [
+            [
+                "b05fafefbe053cb8"
+            ]
+        ]
+    },
+    {
+        "id": "b05fafefbe053cb8",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "97c6c7c21100c28b",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "69310e1da87dcd44"
+            ]
+        ]
+    },
+    {
+        "id": "608ff1af7e150471",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "list schemas 2",
+        "query": "select * from pg_catalog.pg_namespace;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 540,
+        "y": 380,
+        "wires": [
+            [
+                "8b36ec1c0a504966"
+            ]
+        ]
+    },
+    {
+        "id": "78bb794870691b70",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "608ff1af7e150471"
+            ]
+        ]
+    },
+    {
+        "id": "8b36ec1c0a504966",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d17d5164df6e3c38",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "select",
+        "query": "SELECT * FROM surance.test;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 490,
+        "y": 100,
+        "wires": [
+            [
+                "1abf2e6a39eb26b9"
+            ]
+        ]
+    },
+    {
+        "id": "0949b59d080a786b",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 100,
+        "wires": [
+            [
+                "d17d5164df6e3c38"
+            ]
+        ]
+    },
+    {
+        "id": "1abf2e6a39eb26b9",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "19a44420c6dc1c68",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "create table",
+        "query": "CREATE TABLE public.newmewtable (\n\tid int8 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1 NO CYCLE) NOT NULL,\n\t\"text\" varchar NOT NULL\n);\n\ncommit;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 550,
+        "y": 480,
+        "wires": [
+            [
+                "7cc8a65f0854f1d8"
+            ]
+        ]
+    },
+    {
+        "id": "85e71b7bb4abf9a4",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "19a44420c6dc1c68"
+            ]
+        ]
+    },
+    {
+        "id": "7cc8a65f0854f1d8",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4d51c11538aaf41b",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "select",
+        "query": "SELECT * FROM test;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 530,
+        "y": 560,
+        "wires": [
+            [
+                "6b4d3071b37a762e"
+            ]
+        ]
+    },
+    {
+        "id": "528a2691f5895e1a",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 560,
+        "wires": [
+            [
+                "4d51c11538aaf41b"
+            ]
+        ]
+    },
+    {
+        "id": "6b4d3071b37a762e",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ee8c58526013f675",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "insert",
+        "query": "insert into newtable (text) values ('heeeey there') ;\n\ncommit;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 530,
+        "y": 660,
+        "wires": [
+            [
+                "4f0d6b3b8bd4f92b"
+            ]
+        ]
+    },
+    {
+        "id": "24f5035e9216c3a3",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 660,
+        "wires": [
+            [
+                "ee8c58526013f675"
+            ]
+        ]
+    },
+    {
+        "id": "4f0d6b3b8bd4f92b",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "0a01339cb22392ce",
+        "type": "postgresql",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "select",
+        "query": "select * from public.newtable;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 530,
+        "y": 760,
+        "wires": [
+            [
+                "81f12374480f4add"
+            ]
+        ]
+    },
+    {
+        "id": "19ca8edc364d4795",
+        "type": "inject",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 760,
+        "wires": [
+            [
+                "0a01339cb22392ce"
+            ]
+        ]
+    },
+    {
+        "id": "81f12374480f4add",
+        "type": "debug",
+        "z": "8c5bfdbc4f9572a9",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "bcdf473aac563260",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "name": "sayhi",
+        "func": "msg.payload = \"hhheeeey!\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 80,
+        "wires": [
+            [
+                "cce0eca506818720"
+            ]
+        ]
+    },
+    {
+        "id": "8b5093c34a136883",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/sayhi",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "bcdf473aac563260"
+            ]
+        ]
+    },
+    {
+        "id": "cce0eca506818720",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 690,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3bd63028b430b31a",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcms:1337/api/testcollections/{{{documentid}}}?populate=*",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "ed24fac67518cf1b",
+                "f0cda64411f7159b"
+            ]
+        ]
+    },
+    {
+        "id": "32c1436f5209a287",
+        "type": "inject",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "props": [
+            {
+                "p": "documentid",
+                "v": "zudcusplie59yyhd8soz7kma",
+                "vt": "str"
+            },
+            {
+                "p": "headers",
+                "v": "{\"Authorization\":\"Bearer 4dcb84483969c6d09f73d6cf1a3ad6405f788f7547f7ddb51b2c66504cfd535a6523da6aa9c2afc6e1184478db888aefd7418acdfe756bca96d325522c42a0314399f240ffff100dc464f45429bf512a0c016dadefd008566c58bf1289e42ac75bad46419f6f17f748bdc417cc2a4584db2bcb351d24eab5e71525d144eac220\"}",
+                "vt": "json"
+            },
+            {
+                "p": "payload.populate",
+                "v": "*",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "44bb90750742ce6f",
+                "3bd63028b430b31a"
+            ]
+        ]
+    },
+    {
+        "id": "df5d5c19a1441018",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "44bb90750742ce6f",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ed24fac67518cf1b",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 670,
+        "y": 220,
+        "wires": [
+            [
+                "df5d5c19a1441018"
+            ]
+        ]
+    },
+    {
+        "id": "f0cda64411f7159b",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0170976da4023610",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/showtest",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 420,
+        "wires": [
+            [
+                "a279dcf28ba5eecb",
+                "19183e140e48f2c0"
+            ]
+        ]
+    },
+    {
+        "id": "8554f866544c0131",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 930,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "7f3581da6c0c12e4",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/products?populate=*",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 590,
+        "y": 420,
+        "wires": [
+            [
+                "c57813dc7bc76502",
+                "dd342322cacfc8be"
+            ]
+        ]
+    },
+    {
+        "id": "c57813dc7bc76502",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 750,
+        "y": 420,
+        "wires": [
+            [
+                "8554f866544c0131",
+                "3b3dd53631dced59"
+            ]
+        ]
+    },
+    {
+        "id": "3b3dd53631dced59",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e6e283e70f38a571",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "a279dcf28ba5eecb",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "335dcfb8d70b05b5",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "add bearer token v5",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer 4dcb84483969c6d09f73d6cf1a3ad6405f788f7547f7ddb51b2c66504cfd535a6523da6aa9c2afc6e1184478db888aefd7418acdfe756bca96d325522c42a0314399f240ffff100dc464f45429bf512a0c016dadefd008566c58bf1289e42ac75bad46419f6f17f748bdc417cc2a4584db2bcb351d24eab5e71525d144eac220",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "19183e140e48f2c0",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer 696afb45ca89e2f06e9e6b6017408199b48698c52ba6d00bc9dee6f202c57b02ec7fdb5c8b208791b73b2939b0f7605f7cc220b435f7f6d35c64d5b842e05239842f66cd884e1a7d7afc99eafeb88c0f43b7c804f3967f94af719b4edfa21315448f31da729dffbd711572baa78a6b682448d96d51ecdceb45b73ea6c827f177",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 420,
+        "wires": [
+            [
+                "7f3581da6c0c12e4",
+                "e6e283e70f38a571"
+            ]
+        ]
+    },
+    {
+        "id": "dd342322cacfc8be",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2507e47378670e7d",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/showtest/:productid",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 640,
+        "wires": [
+            [
+                "728890327aafac55"
+            ]
+        ]
+    },
+    {
+        "id": "728890327aafac55",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer 696afb45ca89e2f06e9e6b6017408199b48698c52ba6d00bc9dee6f202c57b02ec7fdb5c8b208791b73b2939b0f7605f7cc220b435f7f6d35c64d5b842e05239842f66cd884e1a7d7afc99eafeb88c0f43b7c804f3967f94af719b4edfa21315448f31da729dffbd711572baa78a6b682448d96d51ecdceb45b73ea6c827f177",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 640,
+        "wires": [
+            [
+                "a3bf79f5aefc6d6f"
+            ]
+        ]
+    },
+    {
+        "id": "e329473d6273dd62",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/products/{{{productId}}}?populate=*",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 670,
+        "y": 640,
+        "wires": [
+            [
+                "a241fd6bba54abde",
+                "63774e5a9ce0dfed"
+            ]
+        ]
+    },
+    {
+        "id": "a3bf79f5aefc6d6f",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "productId",
+                "pt": "msg",
+                "to": "req.params.productid",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 720,
+        "wires": [
+            [
+                "e329473d6273dd62",
+                "99f5b35762b882b4"
+            ]
+        ]
+    },
+    {
+        "id": "a241fd6bba54abde",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 830,
+        "y": 640,
+        "wires": [
+            [
+                "e2ba8a52b0ae7bf2"
+            ]
+        ]
+    },
+    {
+        "id": "e2ba8a52b0ae7bf2",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 970,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "99f5b35762b882b4",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "63774e5a9ce0dfed",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "b92cecd366fc8fb6",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/products?populate=*",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 670,
+        "y": 840,
+        "wires": [
+            [
+                "68f81b44f9338624"
+            ]
+        ]
+    },
+    {
+        "id": "80c95579c07b65ce",
+        "type": "inject",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 840,
+        "wires": [
+            [
+                "426089d0246349cd"
+            ]
+        ]
+    },
+    {
+        "id": "426089d0246349cd",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer 696afb45ca89e2f06e9e6b6017408199b48698c52ba6d00bc9dee6f202c57b02ec7fdb5c8b208791b73b2939b0f7605f7cc220b435f7f6d35c64d5b842e05239842f66cd884e1a7d7afc99eafeb88c0f43b7c804f3967f94af719b4edfa21315448f31da729dffbd711572baa78a6b682448d96d51ecdceb45b73ea6c827f177",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 840,
+        "wires": [
+            [
+                "b92cecd366fc8fb6"
+            ]
+        ]
+    },
+    {
+        "id": "68f81b44f9338624",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 850,
+        "y": 840,
+        "wires": [
+            [
+                "84ee21c237acd63e"
+            ]
+        ]
+    },
+    {
+        "id": "84ee21c237acd63e",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "6bd444d83cf3ac18",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/users?populate=*",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 670,
+        "y": 1000,
+        "wires": [
+            [
+                "7b4c21a07f3c720d"
+            ]
+        ]
+    },
+    {
+        "id": "7b4c21a07f3c720d",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 850,
+        "y": 1000,
+        "wires": [
+            [
+                "658d4a509404312f"
+            ]
+        ]
+    },
+    {
+        "id": "658d4a509404312f",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "fb072bb253a7c587",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer 696afb45ca89e2f06e9e6b6017408199b48698c52ba6d00bc9dee6f202c57b02ec7fdb5c8b208791b73b2939b0f7605f7cc220b435f7f6d35c64d5b842e05239842f66cd884e1a7d7afc99eafeb88c0f43b7c804f3967f94af719b4edfa21315448f31da729dffbd711572baa78a6b682448d96d51ecdceb45b73ea6c827f177",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 1000,
+        "wires": [
+            [
+                "6bd444d83cf3ac18"
+            ]
+        ]
+    },
+    {
+        "id": "73bdd3336bc8a754",
+        "type": "inject",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 1000,
+        "wires": [
+            [
+                "fb072bb253a7c587"
+            ]
+        ]
+    },
+    {
+        "id": "0221385a42323bb5",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/cms-orders",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 1300,
+        "wires": [
+            [
+                "57feb3bff7a24dc3",
+                "38c3b8c2ace412b3"
+            ]
+        ]
+    },
+    {
+        "id": "5da93b7a66402b95",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 810,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "f4505b82633168d5",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/orders{{{queryString}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 770,
+        "y": 1360,
+        "wires": [
+            [
+                "79bcaef258ce3084",
+                "7ff0d7df1c98cfc0"
+            ]
+        ]
+    },
+    {
+        "id": "57feb3bff7a24dc3",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 140,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "79bcaef258ce3084",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "d1db3c2e8fffd6c4",
+        "type": "config",
+        "z": "f4d873b0b812eae0",
+        "name": "init request aggregates",
+        "properties": [
+            {
+                "p": "order_requests",
+                "pt": "flow",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "active": true,
+        "x": 400,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "996406ae3945948d",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "3e0a3b3c9bb677ca",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 790,
+        "y": 1520,
+        "wires": [
+            [
+                "37610f9155cbe4ce",
+                "5da93b7a66402b95"
+            ]
+        ]
+    },
+    {
+        "id": "37610f9155cbe4ce",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "38c3b8c2ace412b3",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 1300,
+        "wires": [
+            [
+                "6ad93ef8b6f34bc5"
+            ]
+        ]
+    },
+    {
+        "id": "7ff0d7df1c98cfc0",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 1440,
+        "wires": [
+            [
+                "3e0a3b3c9bb677ca"
+            ]
+        ]
+    },
+    {
+        "id": "af6b9273edec5888",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "expreiments with Strapi 5",
+        "info": "",
+        "x": 130,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7eaf82d36414d9a6",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "expreiments with Strapi 4",
+        "info": "",
+        "x": 130,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a9acce9c1c0f07c4",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "Get orders  ( Strapi 4 )",
+        "info": "",
+        "x": 134.1999969482422,
+        "y": 1183,
+        "wires": []
+    },
+    {
+        "id": "7eab0f581bb02669",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request to flow",
+        "rules": [
+            {
+                "t": "set",
+                "p": "order_requests[msg._msgid]",
+                "pt": "flow",
+                "to": "{}",
+                "tot": "json",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "order_requests[msg._msgid].payload",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "order_requests[msg._msgid].req",
+                "pt": "flow",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "order_requests[msg._msgid].res",
+                "pt": "flow",
+                "to": "res",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "order_requests[msg._msgid]._msgid",
+                "pt": "flow",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "afdaf1b8b54eef9b",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "restore original request from flow",
+        "rules": [
+            {
+                "t": "set",
+                "p": "req",
+                "pt": "msg",
+                "to": "order_requests[msg.requestId].req",
+                "tot": "flow",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "order_requests[msg.requestId]",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3958c61244d0030b",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "url": "/api/v0/cms-orders/:orderid",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 1680,
+        "wires": [
+            [
+                "3742cb90dd47dc47"
+            ]
+        ]
+    },
+    {
+        "id": "3742cb90dd47dc47",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "orderId",
+                "pt": "msg",
+                "to": "req.params.orderid",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 1680,
+        "wires": [
+            [
+                "bb1c2bc45d93455e"
+            ]
+        ]
+    },
+    {
+        "id": "fc5e818e6a4e3dfe",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 990,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "91c517ee5b135557",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/orders/{{{orderId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 950,
+        "y": 1740,
+        "wires": [
+            [
+                "24da1d29f9bacdbf",
+                "862f999b57a92b5c"
+            ]
+        ]
+    },
+    {
+        "id": "24da1d29f9bacdbf",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "47cb131eefeee2dd",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "855b79714e2586c8",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 970,
+        "y": 1900,
+        "wires": [
+            [
+                "f2e1ea1a5c7715b3",
+                "fc5e818e6a4e3dfe"
+            ]
+        ]
+    },
+    {
+        "id": "f2e1ea1a5c7715b3",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "bb1c2bc45d93455e",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 1720,
+        "wires": [
+            [
+                "46337a976850cd14"
+            ]
+        ]
+    },
+    {
+        "id": "59e7eb9203f9a348",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "Get all orders",
+        "info": "",
+        "x": 150,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "541673c062238a0f",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "name": "Get order by id",
+        "info": "",
+        "x": 160,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "862f999b57a92b5c",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 1840,
+        "wires": [
+            [
+                "855b79714e2586c8"
+            ]
+        ]
+    },
+    {
+        "id": "6ad93ef8b6f34bc5",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "drop payload",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 1340,
+        "wires": [
+            [
+                "963377c648dba080"
+            ]
+        ]
+    },
+    {
+        "id": "46337a976850cd14",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "name": "drop payload",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 1760,
+        "wires": [
+            [
+                "47cb131eefeee2dd",
+                "91c517ee5b135557"
+            ]
+        ]
+    },
+    {
+        "id": "963377c648dba080",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "name": "set url query string",
+        "func": "const baseUrlStr = \"/api/v0/cms-orders\";\n\nlet urlStr = msg.original_req.url;\nlet queryString = urlStr.substring(\n    urlStr.indexOf(baseUrlStr)\n    +\n    baseUrlStr.length\n);\n\nmsg.queryString = queryString;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1400,
+        "wires": [
+            [
+                "f4505b82633168d5",
+                "996406ae3945948d"
+            ]
+        ]
+    }
+]
