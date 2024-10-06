@@ -140,7 +140,9 @@
             "b2e4b9f70fd39e1b",
             "499f6b3b9af6007e",
             "e9c894830395f1b2",
-            "abab57ca978d3268"
+            "abab57ca978d3268",
+            "074cd567ebaa0861",
+            "de28274f46099448"
         ],
         "x": 14,
         "y": 2139,
@@ -415,9 +417,9 @@
             "10c026e2378608ae",
             "466e77fbd6a0b6c0"
         ],
-        "x": 34,
+        "x": 14,
         "y": 4559,
-        "w": 1472,
+        "w": 1512,
         "h": 422
     },
     {
@@ -2617,7 +2619,7 @@
         "wires": [
             [
                 "dddcb50a860b179f",
-                "2611e4ad935990f2"
+                "de28274f46099448"
             ]
         ]
     },
@@ -2666,12 +2668,13 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 990,
+        "x": 1090,
         "y": 2300,
         "wires": [
             [
                 "d5863ee92f3f2502",
-                "748d2c04bd15077d"
+                "748d2c04bd15077d",
+                "2611e4ad935990f2"
             ]
         ]
     },
@@ -3109,8 +3112,7 @@
         "y": 2620,
         "wires": [
             [
-                "3423c2eb0800e670",
-                "aae0afe5d2db34c3"
+                "3423c2eb0800e670"
             ]
         ]
     },
@@ -3128,7 +3130,8 @@
         "wires": [
             [
                 "5d6ca08716e06d68",
-                "40fe0b06d09c8ea5"
+                "40fe0b06d09c8ea5",
+                "aae0afe5d2db34c3"
             ]
         ]
     },
@@ -3452,7 +3455,7 @@
         "z": "f4d873b0b812eae0",
         "g": "b138b301e43db445",
         "name": "prepare order record",
-        "func": "\nlet orderRecord = {\n    order_id: msg.payload.data.id,\n    order_number: msg.newOrderRec.orderNumber,\n    status_id: msg.newOrderRec.status.id,\n    product_id: msg.newOrderRec.product.id,\n    amount: msg.newOrderRec.amount,\n    owner_id: msg.userToken.id,\n    courier_id: msg.newOrderRec.courier.user.id,\n    createdat: msg.payload.data.attributes.createdAt,\n    updatedat: msg.payload.data.attributes.updatedAt,\n    publishedat: msg.payload.data.attributes.publishedAt\n};\n\nmsg.payload = orderRecord;\n\nreturn msg;",
+        "func": "\nlet orderRecord = {\n    order_id: msg.payload.data.id,\n    order_number: msg.newOrderRec.orderNumber,\n    status_id: msg.newOrderRec.status.id,\n    product_id: msg.newOrderRec.product.id,\n    amount: msg.newOrderRec.amount,\n    owner_id: msg.userToken.id,\n    courier_id: msg.newOrderRec.courier.id,\n    createdat: msg.payload.data.attributes.createdAt,\n    updatedat: msg.payload.data.attributes.updatedAt,\n    publishedat: msg.payload.data.attributes.publishedAt\n};\n\nmsg.payload = orderRecord;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3463,7 +3466,8 @@
         "y": 2260,
         "wires": [
             [
-                "b2e4b9f70fd39e1b"
+                "b2e4b9f70fd39e1b",
+                "074cd567ebaa0861"
             ]
         ]
     },
@@ -4308,7 +4312,7 @@
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 860,
+        "x": 880,
         "y": 4640,
         "wires": [
             [
@@ -4330,7 +4334,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
+        "x": 780,
         "y": 4820,
         "wires": []
     },
@@ -4344,7 +4348,7 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 230,
+        "x": 210,
         "y": 4640,
         "wires": [
             [
@@ -4360,7 +4364,7 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1430,
+        "x": 1450,
         "y": 4700,
         "wires": []
     },
@@ -4377,7 +4381,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
+        "x": 830,
         "y": 4780,
         "wires": [
             [
@@ -4393,7 +4397,7 @@
         "g": "9fde22277546daea",
         "name": "Get top 5 trending products by value",
         "info": "",
-        "x": 200,
+        "x": 220,
         "y": 4600,
         "wires": []
     },
@@ -4445,7 +4449,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 550,
         "y": 4640,
         "wires": [
             [
@@ -4468,7 +4472,7 @@
             }
         ],
         "active": true,
-        "x": 490,
+        "x": 510,
         "y": 4600,
         "wires": []
     },
@@ -4492,7 +4496,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
+        "x": 850,
         "y": 4700,
         "wires": [
             [
@@ -4520,7 +4524,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 800,
+        "x": 820,
         "y": 4740,
         "wires": [
             [
@@ -4545,7 +4549,7 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1130,
+        "x": 1150,
         "y": 4700,
         "wires": [
             [
@@ -4567,7 +4571,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1120,
+        "x": 1140,
         "y": 4940,
         "wires": []
     },
@@ -4580,7 +4584,7 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 1130,
+        "x": 1150,
         "y": 4740,
         "wires": [
             [
@@ -4602,7 +4606,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1170,
+        "x": 1190,
         "y": 4820,
         "wires": [
             [
@@ -4644,7 +4648,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1230,
+        "x": 1250,
         "y": 4860,
         "wires": [
             [
@@ -4666,7 +4670,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1340,
+        "x": 1360,
         "y": 4640,
         "wires": []
     },
@@ -4684,7 +4688,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1300,
+        "x": 1320,
         "y": 4600,
         "wires": []
     },
@@ -4706,7 +4710,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1270,
+        "x": 1290,
         "y": 4900,
         "wires": [
             [
@@ -4735,7 +4739,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1170,
+        "x": 1190,
         "y": 4780,
         "wires": [
             [
@@ -5634,5 +5638,41 @@
                 "846bd42cdd9b48e5"
             ]
         ]
+    },
+    {
+        "id": "074cd567ebaa0861",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "b138b301e43db445",
+        "name": "debug 58",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1660,
+        "y": 2340,
+        "wires": []
+    },
+    {
+        "id": "de28274f46099448",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "b138b301e43db445",
+        "name": "debug 59",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 2180,
+        "wires": []
     }
 ]
