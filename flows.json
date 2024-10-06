@@ -361,12 +361,24 @@
             "b2847e5597719393",
             "70ab926af706c3a6",
             "fbec2cee5821fb86",
-            "87b58bd6f20f616d"
+            "87b58bd6f20f616d",
+            "6d8eebea5de7ec7f",
+            "0e8d06b159344be1",
+            "24c656fd75613096",
+            "f141e28b443bb5cb",
+            "db971e2c079b8132",
+            "a1be40cf0200746e",
+            "bc41d946cc617c3d",
+            "81daa8683479d8bd",
+            "a392d03c45d02c26",
+            "5353fcb42534f11a",
+            "152349ba5b9c7cfd",
+            "c98321dd4bc8a5cf"
         ],
         "x": 14,
         "y": 4079,
-        "w": 872,
-        "h": 262
+        "w": 1472,
+        "h": 402
     },
     {
         "id": "3c6b3935308742a0",
@@ -3612,7 +3624,7 @@
         "z": "f4d873b0b812eae0",
         "g": "85d9c313f2c2b597",
         "name": "filter output by owner id",
-        "func": "let userId = msg.userToken.id\n\nif (msg.payload.data !== undefined && msg.payload.data !== null){\n    msg.payload.data = msg.payload.data.filter(\n        order => {\n            \n            if (order.attributes.owner !== undefined){\n                let ownerId = order.attributes.owner.data.id;\n                return ownerId === userId;\n            } else {\n                return false;\n            }            \n        }\n    )\n}\n\n\nreturn msg;",
+        "func": "let userId = msg.userToken.id\n\n// admin has userId == 1 and he has access to all orders\nif (userId !== 1){\n    // filter orders by ownerId for all other users\n    if (msg.payload.data !== undefined && msg.payload.data !== null){\n    msg.payload.data = msg.payload.data.filter(\n        order => {\n            \n            if (order.attributes.owner !== undefined){\n                let ownerId = order.attributes.owner.data.id;\n                return ownerId === userId;\n            } else {\n                return false;\n            }            \n        }\n    )\n}\n\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3683,11 +3695,11 @@
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 570,
+        "x": 850,
         "y": 4160,
         "wires": [
             [
-                "fbec2cee5821fb86"
+                "24c656fd75613096"
             ]
         ]
     },
@@ -3701,11 +3713,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 620,
-        "y": 4300,
+        "x": 740,
+        "y": 4340,
         "wires": []
     },
     {
@@ -3722,7 +3735,7 @@
         "y": 4160,
         "wires": [
             [
-                "b762a07cf0f3a51f"
+                "6d8eebea5de7ec7f"
             ]
         ]
     },
@@ -3734,7 +3747,7 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 810,
+        "x": 1410,
         "y": 4220,
         "wires": []
     },
@@ -3743,20 +3756,20 @@
         "type": "function",
         "z": "f4d873b0b812eae0",
         "g": "791792950f41a2f5",
-        "name": "wrap list into dict",
-        "func": "let topProducts = msg.payload;\n\nmsg.payload = {\n    trending: topProducts\n}\n\nreturn msg;",
+        "name": "serialize product requests",
+        "func": "let topProducts = msg.payload;\nlet totalProducts = msg.payload.length;\n\ntopProducts.forEach(\n    (product, index) => {\n\n        msg.productId = product.product_id;\n        msg.product = product;\n        msg.index = index;\n        msg.totalProducts = totalProducts;\n        msg.payload = {}\n\n        node.send(msg);\n    }\n);\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 4220,
+        "x": 790,
+        "y": 4300,
         "wires": [
             [
-                "70ab926af706c3a6",
-                "989f8bc0e9aabd2b"
+                "989f8bc0e9aabd2b",
+                "db971e2c079b8132"
             ]
         ]
     },
@@ -3817,6 +3830,324 @@
             [
                 "4f29c3e47cec1d39",
                 "d5b2929ef780a004"
+            ]
+        ]
+    },
+    {
+        "id": "6d8eebea5de7ec7f",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 4160,
+        "wires": [
+            [
+                "b762a07cf0f3a51f"
+            ]
+        ]
+    },
+    {
+        "id": "0e8d06b159344be1",
+        "type": "config",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "init aggregation dict",
+        "properties": [
+            {
+                "p": "trendintProductRequests",
+                "pt": "flow",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "active": true,
+        "x": 470,
+        "y": 4120,
+        "wires": []
+    },
+    {
+        "id": "24c656fd75613096",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "save top5 products aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "trendintProductRequests[msg.requestId]",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 4220,
+        "wires": [
+            [
+                "f141e28b443bb5cb"
+            ]
+        ]
+    },
+    {
+        "id": "f141e28b443bb5cb",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI4MTU2MzI5LCJleHAiOjE3MzA3NDgzMjl9.HYceiuslgnpQyaEe0OOuX3IunNT-B0w8-B3JwcTT5IA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 4260,
+        "wires": [
+            [
+                "fbec2cee5821fb86"
+            ]
+        ]
+    },
+    {
+        "id": "db971e2c079b8132",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/products/{{{productId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1110,
+        "y": 4220,
+        "wires": [
+            [
+                "bc41d946cc617c3d"
+            ]
+        ]
+    },
+    {
+        "id": "a1be40cf0200746e",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "debug 43",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 4440,
+        "wires": []
+    },
+    {
+        "id": "bc41d946cc617c3d",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1110,
+        "y": 4260,
+        "wires": [
+            [
+                "81daa8683479d8bd",
+                "152349ba5b9c7cfd"
+            ]
+        ]
+    },
+    {
+        "id": "81daa8683479d8bd",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "aggregate product details",
+        "func": "let aggregateStore = flow.get(\"trendintProductRequests\");\n\nlet requestAggregate = aggregateStore[msg.requestId];\n\nrequestAggregate.forEach(\n    (aggregate, index) => {\n        aggregate.product = msg.payload;\n    }\n)\n\nlet aggregateReady = true;\nrequestAggregate.forEach(\n    aggregate => {\n        if (aggregate.product === undefined){\n            aggregateReady = false;\n        }\n    }\n);\n\nif (aggregateReady){\n\n    msg.payload = requestAggregate;\n    node.send(msg);\n\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 4300,
+        "wires": [
+            [
+                "a392d03c45d02c26",
+                "5353fcb42534f11a"
+            ]
+        ]
+    },
+    {
+        "id": "a392d03c45d02c26",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 4340,
+        "wires": [
+            [
+                "70ab926af706c3a6",
+                "c98321dd4bc8a5cf"
+            ]
+        ]
+    },
+    {
+        "id": "5353fcb42534f11a",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "debug 44",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 4160,
+        "wires": []
+    },
+    {
+        "id": "152349ba5b9c7cfd",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "debug 45",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 4120,
+        "wires": []
+    },
+    {
+        "id": "c98321dd4bc8a5cf",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "clear top5 products aggregate",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "trendintProductRequests[msg.requestId]",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 4380,
+        "wires": [
+            [
+                "a1be40cf0200746e"
             ]
         ]
     }
