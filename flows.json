@@ -373,12 +373,130 @@
             "a392d03c45d02c26",
             "5353fcb42534f11a",
             "152349ba5b9c7cfd",
-            "c98321dd4bc8a5cf"
+            "c98321dd4bc8a5cf",
+            "7c258d9c6ea6ad8c"
         ],
         "x": 14,
         "y": 4079,
         "w": 1472,
-        "h": 402
+        "h": 422
+    },
+    {
+        "id": "9fde22277546daea",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "560f13629071b47d",
+            "7864ae143fde24b0",
+            "109b2146f6963611",
+            "f4e030a82d3b7b43",
+            "1cf986c8638bc01c",
+            "2e57bed0155b9c85",
+            "8954893af7013448",
+            "92e00a0e909245dc",
+            "40c0dbacc8143961",
+            "bb87ec2e3eb7c484",
+            "55e53dce00a095c3",
+            "b4c648053472688d",
+            "e428d2fed69181fd",
+            "20dc12b3b2816907",
+            "fb472ed44da93ddf",
+            "1a1ba2d11cb8f522",
+            "447ddc37213b7348",
+            "10c026e2378608ae",
+            "466e77fbd6a0b6c0"
+        ],
+        "x": 34,
+        "y": 4559,
+        "w": 1472,
+        "h": 422
+    },
+    {
+        "id": "c4677d21e66c9306",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "9d53bfeeda301696",
+            "65c509c699bcf721",
+            "c5bc2fd77e2d4db8",
+            "498dcb18809c0925",
+            "62df4f69d275ba2b",
+            "1b5777a4f71d0df2",
+            "59b8cab82caa3d1d",
+            "4f656690db03992b",
+            "4f23499b6067107e",
+            "f025d839ff7f765c",
+            "a4e79d404ff9387f",
+            "282bbb13d75cbbc1",
+            "97f105e5ccc0f36d",
+            "ba6e8e8a63020a41",
+            "5e4d228d8725e136",
+            "cc389747e6362254",
+            "d15a5a03066c8cc2",
+            "b7cb983250eab1fc",
+            "97b6d1d289bab0f8"
+        ],
+        "x": 34,
+        "y": 5019,
+        "w": 1472,
+        "h": 422
+    },
+    {
+        "id": "9aa2b7aadce40c59",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "683165cc9e70a3fa",
+            "964d2f3da6e8cbe3",
+            "67d5ebb335e81652",
+            "e587be5ff722b301",
+            "319625a1916aa67f",
+            "b1709131c4fc0a1e",
+            "ccd8e941ad172389",
+            "b589d75b14413cef",
+            "8ec547db6f309913",
+            "35407123777a81c9",
+            "8ebae5ed1444f572",
+            "d4c26f156aa88694",
+            "b4bd3fe235f11838",
+            "846bd42cdd9b48e5",
+            "4bcf0274651ca172",
+            "cd522d732fda6fa3",
+            "e1c22ade76d0fe6e",
+            "8e68a4af9fccf03c",
+            "caa599ba6801db3d"
+        ],
+        "x": 34,
+        "y": 5519,
+        "w": 1512,
+        "h": 422
     },
     {
         "id": "3c6b3935308742a0",
@@ -3690,7 +3808,7 @@
         "z": "f4d873b0b812eae0",
         "g": "791792950f41a2f5",
         "name": "get top 5 trending products of all time",
-        "query": "select product_id, count(product_id) as sales from orders\ngroup by product_id\norder by sales desc\nlimit 5;",
+        "query": "select product_id, count(product_id) as sales, count(product_id)*sum(amount) as value from orders\ngroup by product_id\norder by sales desc\nlimit 5;",
         "postgreSQLConfig": "3c6b3935308742a0",
         "split": false,
         "rowsPerMsg": 1,
@@ -3757,7 +3875,7 @@
         "z": "f4d873b0b812eae0",
         "g": "791792950f41a2f5",
         "name": "serialize product requests",
-        "func": "let topProducts = msg.payload;\nlet totalProducts = msg.payload.length;\n\ntopProducts.forEach(\n    (product, index) => {\n\n        msg.productId = product.product_id;\n        msg.product = product;\n        msg.index = index;\n        msg.totalProducts = totalProducts;\n        msg.payload = {}\n\n        node.send(msg);\n    }\n);\n",
+        "func": "let topProducts = msg.payload;\nlet totalProducts = msg.payload.length;\n\ntopProducts.forEach(\n    (product, idx) => {\n\n        msg.productId = product.product_id;\n        msg.product = product;\n        msg.index = idx;\n        msg.totalProducts = totalProducts;\n        msg.payload = {}\n\n        node.send(msg);\n    }\n);\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -4003,8 +4121,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1140,
-        "y": 4440,
+        "x": 1100,
+        "y": 4460,
         "wires": []
     },
     {
@@ -4020,8 +4138,8 @@
         "y": 4260,
         "wires": [
             [
-                "81daa8683479d8bd",
-                "152349ba5b9c7cfd"
+                "152349ba5b9c7cfd",
+                "7c258d9c6ea6ad8c"
             ]
         ]
     },
@@ -4031,15 +4149,15 @@
         "z": "f4d873b0b812eae0",
         "g": "791792950f41a2f5",
         "name": "aggregate product details",
-        "func": "let aggregateStore = flow.get(\"trendintProductRequests\");\n\nlet requestAggregate = aggregateStore[msg.requestId];\n\nrequestAggregate.forEach(\n    (aggregate, index) => {\n        aggregate.product = msg.payload;\n    }\n)\n\nlet aggregateReady = true;\nrequestAggregate.forEach(\n    aggregate => {\n        if (aggregate.product === undefined){\n            aggregateReady = false;\n        }\n    }\n);\n\nif (aggregateReady){\n\n    msg.payload = requestAggregate;\n    node.send(msg);\n\n}\n",
+        "func": "msg.requestAggregate.forEach(\n    (aggregate) => {\n        if (msg.payload.data.id == aggregate.product_id)\n            aggregate.product = msg.payload;\n    }\n)\n\nlet aggregateReady = true;\nmsg.requestAggregate.forEach(\n    (agg) => {\n        if (agg.product === undefined){\n            aggregateReady = false;\n        }\n    }\n);\n\nif (aggregateReady){\n\n    msg.payload = msg.requestAggregate;\n    node.send(msg);\n\n}\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1170,
-        "y": 4300,
+        "x": 1150,
+        "y": 4340,
         "wires": [
             [
                 "a392d03c45d02c26",
@@ -4061,9 +4179,9 @@
             },
             {
                 "t": "set",
-                "p": "original_req",
+                "p": "req",
                 "pt": "msg",
-                "to": "req",
+                "to": "original_req",
                 "tot": "msg",
                 "dc": true
             },
@@ -4080,11 +4198,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1170,
-        "y": 4340,
+        "x": 1210,
+        "y": 4380,
         "wires": [
             [
-                "70ab926af706c3a6",
                 "c98321dd4bc8a5cf"
             ]
         ]
@@ -4143,11 +4260,1378 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1150,
-        "y": 4380,
+        "x": 1250,
+        "y": 4420,
         "wires": [
             [
-                "a1be40cf0200746e"
+                "a1be40cf0200746e",
+                "70ab926af706c3a6"
+            ]
+        ]
+    },
+    {
+        "id": "7c258d9c6ea6ad8c",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "load products aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestAggregate",
+                "pt": "msg",
+                "to": "trendintProductRequests[msg.requestId]",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 4300,
+        "wires": [
+            [
+                "81daa8683479d8bd"
+            ]
+        ]
+    },
+    {
+        "id": "560f13629071b47d",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "get top 5 trending products by value",
+        "query": "select product_id, count(product_id) as sales, count(product_id)*sum(amount) as value from orders\ngroup by product_id\norder by value desc\nlimit 5;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 860,
+        "y": 4640,
+        "wires": [
+            [
+                "40c0dbacc8143961"
+            ]
+        ]
+    },
+    {
+        "id": "7864ae143fde24b0",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "debug 46",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 4820,
+        "wires": []
+    },
+    {
+        "id": "109b2146f6963611",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "",
+        "url": "/api/v0/stats/trending-products-by-value",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 4640,
+        "wires": [
+            [
+                "8954893af7013448"
+            ]
+        ]
+    },
+    {
+        "id": "f4e030a82d3b7b43",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1430,
+        "y": 4700,
+        "wires": []
+    },
+    {
+        "id": "1cf986c8638bc01c",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "serialize product requests",
+        "func": "let topProducts = msg.payload;\nlet totalProducts = msg.payload.length;\n\ntopProducts.forEach(\n    (product, idx) => {\n\n        msg.productId = product.product_id;\n        msg.product = product;\n        msg.index = idx;\n        msg.totalProducts = totalProducts;\n        msg.payload = {}\n\n        node.send(msg);\n    }\n);\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 4780,
+        "wires": [
+            [
+                "7864ae143fde24b0",
+                "55e53dce00a095c3"
+            ]
+        ]
+    },
+    {
+        "id": "2e57bed0155b9c85",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "Get top 5 trending products by value",
+        "info": "",
+        "x": 200,
+        "y": 4600,
+        "wires": []
+    },
+    {
+        "id": "8954893af7013448",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 4640,
+        "wires": [
+            [
+                "560f13629071b47d"
+            ]
+        ]
+    },
+    {
+        "id": "92e00a0e909245dc",
+        "type": "config",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "init aggregation dict",
+        "properties": [
+            {
+                "p": "trendintProductRequests",
+                "pt": "flow",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "active": true,
+        "x": 490,
+        "y": 4600,
+        "wires": []
+    },
+    {
+        "id": "40c0dbacc8143961",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "save top5 products aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "trendintProductRequests[msg.requestId]",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 4700,
+        "wires": [
+            [
+                "bb87ec2e3eb7c484"
+            ]
+        ]
+    },
+    {
+        "id": "bb87ec2e3eb7c484",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI4MTU2MzI5LCJleHAiOjE3MzA3NDgzMjl9.HYceiuslgnpQyaEe0OOuX3IunNT-B0w8-B3JwcTT5IA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 4740,
+        "wires": [
+            [
+                "1cf986c8638bc01c"
+            ]
+        ]
+    },
+    {
+        "id": "55e53dce00a095c3",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/products/{{{productId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1130,
+        "y": 4700,
+        "wires": [
+            [
+                "e428d2fed69181fd"
+            ]
+        ]
+    },
+    {
+        "id": "b4c648053472688d",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "debug 47",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 4940,
+        "wires": []
+    },
+    {
+        "id": "e428d2fed69181fd",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1130,
+        "y": 4740,
+        "wires": [
+            [
+                "447ddc37213b7348",
+                "466e77fbd6a0b6c0"
+            ]
+        ]
+    },
+    {
+        "id": "20dc12b3b2816907",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "aggregate product details",
+        "func": "msg.requestAggregate.forEach(\n    (aggregate) => {\n        if (msg.payload.data.id == aggregate.product_id)\n            aggregate.product = msg.payload;\n    }\n)\n\nlet aggregateReady = true;\nmsg.requestAggregate.forEach(\n    (agg) => {\n        if (agg.product === undefined){\n            aggregateReady = false;\n        }\n    }\n);\n\nif (aggregateReady){\n\n    msg.payload = msg.requestAggregate;\n    node.send(msg);\n\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 4820,
+        "wires": [
+            [
+                "fb472ed44da93ddf",
+                "1a1ba2d11cb8f522"
+            ]
+        ]
+    },
+    {
+        "id": "fb472ed44da93ddf",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "req",
+                "pt": "msg",
+                "to": "original_req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 4860,
+        "wires": [
+            [
+                "10c026e2378608ae"
+            ]
+        ]
+    },
+    {
+        "id": "1a1ba2d11cb8f522",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "debug 48",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 4640,
+        "wires": []
+    },
+    {
+        "id": "447ddc37213b7348",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "debug 49",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 4600,
+        "wires": []
+    },
+    {
+        "id": "10c026e2378608ae",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "clear top5 products aggregate",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "trendintProductRequests[msg.requestId]",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 4900,
+        "wires": [
+            [
+                "b4c648053472688d",
+                "f4e030a82d3b7b43"
+            ]
+        ]
+    },
+    {
+        "id": "466e77fbd6a0b6c0",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9fde22277546daea",
+        "name": "load products aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestAggregate",
+                "pt": "msg",
+                "to": "trendintProductRequests[msg.requestId]",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 4780,
+        "wires": [
+            [
+                "20dc12b3b2816907"
+            ]
+        ]
+    },
+    {
+        "id": "9d53bfeeda301696",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "get top 5 trending products by value",
+        "query": "select owner_id as agent_id, count(owner_id) as sales, count(owner_id)*sum(amount) as value from orders\ngroup by owner_id \norder by value desc\nlimit 5;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 860,
+        "y": 5100,
+        "wires": [
+            [
+                "4f23499b6067107e"
+            ]
+        ]
+    },
+    {
+        "id": "65c509c699bcf721",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "debug 50",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 5280,
+        "wires": []
+    },
+    {
+        "id": "c5bc2fd77e2d4db8",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "",
+        "url": "/api/v0/stats/best-agents-by-value",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 5100,
+        "wires": [
+            [
+                "59b8cab82caa3d1d"
+            ]
+        ]
+    },
+    {
+        "id": "498dcb18809c0925",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1430,
+        "y": 5160,
+        "wires": []
+    },
+    {
+        "id": "62df4f69d275ba2b",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "serialize product requests",
+        "func": "let topAgents = msg.payload;\nlet totalAgents = topAgents.length;\n\ntopAgents.forEach(\n    (agent, idx) => {\n\n        msg.agentId = agent.agent_id;\n        msg.agent = agent;\n        msg.index = idx;\n        msg.totalAgents = totalAgents;\n        msg.payload = {}\n\n        node.send(msg);\n    }\n);\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 5240,
+        "wires": [
+            [
+                "65c509c699bcf721",
+                "a4e79d404ff9387f"
+            ]
+        ]
+    },
+    {
+        "id": "1b5777a4f71d0df2",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "Get top 5 best agents by value",
+        "info": "",
+        "x": 180,
+        "y": 5060,
+        "wires": []
+    },
+    {
+        "id": "59b8cab82caa3d1d",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 5100,
+        "wires": [
+            [
+                "9d53bfeeda301696"
+            ]
+        ]
+    },
+    {
+        "id": "4f656690db03992b",
+        "type": "config",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "init aggregation dict",
+        "properties": [
+            {
+                "p": "trendintProductRequests",
+                "pt": "flow",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "active": true,
+        "x": 490,
+        "y": 5060,
+        "wires": []
+    },
+    {
+        "id": "4f23499b6067107e",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "save top5 agents aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "bestAgentsRequests[msg.requestId]",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 5160,
+        "wires": [
+            [
+                "f025d839ff7f765c"
+            ]
+        ]
+    },
+    {
+        "id": "f025d839ff7f765c",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI4MTU2MzI5LCJleHAiOjE3MzA3NDgzMjl9.HYceiuslgnpQyaEe0OOuX3IunNT-B0w8-B3JwcTT5IA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 5200,
+        "wires": [
+            [
+                "62df4f69d275ba2b"
+            ]
+        ]
+    },
+    {
+        "id": "a4e79d404ff9387f",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/users/{{{agentId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1130,
+        "y": 5160,
+        "wires": [
+            [
+                "97f105e5ccc0f36d"
+            ]
+        ]
+    },
+    {
+        "id": "282bbb13d75cbbc1",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "debug 51",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 5400,
+        "wires": []
+    },
+    {
+        "id": "97f105e5ccc0f36d",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1130,
+        "y": 5200,
+        "wires": [
+            [
+                "d15a5a03066c8cc2",
+                "97b6d1d289bab0f8"
+            ]
+        ]
+    },
+    {
+        "id": "ba6e8e8a63020a41",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "aggregate product details",
+        "func": "msg.requestAggregate.forEach(\n    (aggregate) => {\n        if (msg.payload.id == aggregate.agent_id)\n            aggregate.agent = msg.payload;\n    }\n)\n\nlet aggregateReady = true;\nmsg.requestAggregate.forEach(\n    (agg) => {\n        if (agg.agent === undefined){\n            aggregateReady = false;\n        }\n    }\n);\n\nif (aggregateReady){\n\n    msg.payload = msg.requestAggregate;\n    node.send(msg);\n\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 5280,
+        "wires": [
+            [
+                "5e4d228d8725e136",
+                "cc389747e6362254"
+            ]
+        ]
+    },
+    {
+        "id": "5e4d228d8725e136",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "req",
+                "pt": "msg",
+                "to": "original_req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 5320,
+        "wires": [
+            [
+                "b7cb983250eab1fc"
+            ]
+        ]
+    },
+    {
+        "id": "cc389747e6362254",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "debug 52",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 5100,
+        "wires": []
+    },
+    {
+        "id": "d15a5a03066c8cc2",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "debug 53",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 5060,
+        "wires": []
+    },
+    {
+        "id": "b7cb983250eab1fc",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "clear top5 products aggregate",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "bestAgentsRequests[msg.requestId]",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 5360,
+        "wires": [
+            [
+                "282bbb13d75cbbc1",
+                "498dcb18809c0925"
+            ]
+        ]
+    },
+    {
+        "id": "97b6d1d289bab0f8",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c4677d21e66c9306",
+        "name": "load agents aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestAggregate",
+                "pt": "msg",
+                "to": "bestAgentsRequests[msg.requestId]",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1160,
+        "y": 5240,
+        "wires": [
+            [
+                "ba6e8e8a63020a41"
+            ]
+        ]
+    },
+    {
+        "id": "683165cc9e70a3fa",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "get top 5 trending products by value",
+        "query": "select owner_id as agent_id, count(owner_id) as sales, count(owner_id)*sum(amount) as value from orders\ngroup by owner_id \norder by sales desc\nlimit 5;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 900,
+        "y": 5600,
+        "wires": [
+            [
+                "8ec547db6f309913"
+            ]
+        ]
+    },
+    {
+        "id": "964d2f3da6e8cbe3",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "debug 54",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 5780,
+        "wires": []
+    },
+    {
+        "id": "67d5ebb335e81652",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "",
+        "url": "/api/v0/stats/best-agents-by-sales-count",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 5600,
+        "wires": [
+            [
+                "ccd8e941ad172389"
+            ]
+        ]
+    },
+    {
+        "id": "e587be5ff722b301",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1470,
+        "y": 5660,
+        "wires": []
+    },
+    {
+        "id": "319625a1916aa67f",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "serialize product requests",
+        "func": "let topAgents = msg.payload;\nlet totalAgents = topAgents.length;\n\ntopAgents.forEach(\n    (agent, idx) => {\n\n        msg.agentId = agent.agent_id;\n        msg.agent = agent;\n        msg.index = idx;\n        msg.totalAgents = totalAgents;\n        msg.payload = {}\n\n        node.send(msg);\n    }\n);\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 5740,
+        "wires": [
+            [
+                "964d2f3da6e8cbe3",
+                "8ebae5ed1444f572"
+            ]
+        ]
+    },
+    {
+        "id": "b1709131c4fc0a1e",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "Get top 5 greatest agents by sales count",
+        "info": "",
+        "x": 220,
+        "y": 5560,
+        "wires": []
+    },
+    {
+        "id": "ccd8e941ad172389",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "save original request in msg envelope",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestId",
+                "pt": "msg",
+                "to": "_msgid",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "original_req",
+                "pt": "msg",
+                "to": "req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "req.headers.authorization",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 5600,
+        "wires": [
+            [
+                "683165cc9e70a3fa"
+            ]
+        ]
+    },
+    {
+        "id": "b589d75b14413cef",
+        "type": "config",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "init aggregation dict",
+        "properties": [
+            {
+                "p": "trendintProductRequests",
+                "pt": "flow",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "active": true,
+        "x": 530,
+        "y": 5560,
+        "wires": []
+    },
+    {
+        "id": "8ec547db6f309913",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "save top5 agents aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "bestAgentsRequests[msg.requestId]",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 5660,
+        "wires": [
+            [
+                "35407123777a81c9"
+            ]
+        ]
+    },
+    {
+        "id": "35407123777a81c9",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.authorization",
+                "pt": "msg",
+                "to": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI4MTU2MzI5LCJleHAiOjE3MzA3NDgzMjl9.HYceiuslgnpQyaEe0OOuX3IunNT-B0w8-B3JwcTT5IA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 5700,
+        "wires": [
+            [
+                "319625a1916aa67f"
+            ]
+        ]
+    },
+    {
+        "id": "8ebae5ed1444f572",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/users/{{{agentId}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1170,
+        "y": 5660,
+        "wires": [
+            [
+                "b4bd3fe235f11838"
+            ]
+        ]
+    },
+    {
+        "id": "d4c26f156aa88694",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "debug 55",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 5900,
+        "wires": []
+    },
+    {
+        "id": "b4bd3fe235f11838",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1170,
+        "y": 5700,
+        "wires": [
+            [
+                "e1c22ade76d0fe6e",
+                "caa599ba6801db3d"
+            ]
+        ]
+    },
+    {
+        "id": "846bd42cdd9b48e5",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "aggregate product details",
+        "func": "msg.requestAggregate.forEach(\n    (aggregate) => {\n        if (msg.payload.id == aggregate.agent_id)\n            aggregate.agent = msg.payload;\n    }\n)\n\nlet aggregateReady = true;\nmsg.requestAggregate.forEach(\n    (agg) => {\n        if (agg.agent === undefined){\n            aggregateReady = false;\n        }\n    }\n);\n\nif (aggregateReady){\n\n    msg.payload = msg.requestAggregate;\n    node.send(msg);\n\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 5780,
+        "wires": [
+            [
+                "4bcf0274651ca172",
+                "cd522d732fda6fa3"
+            ]
+        ]
+    },
+    {
+        "id": "4bcf0274651ca172",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "restore original request from msg envelope",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "req",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "req",
+                "pt": "msg",
+                "to": "original_req",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "contentType",
+                "pt": "msg",
+                "to": "headers[\"content-type\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 5820,
+        "wires": [
+            [
+                "8e68a4af9fccf03c"
+            ]
+        ]
+    },
+    {
+        "id": "cd522d732fda6fa3",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "debug 56",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 5600,
+        "wires": []
+    },
+    {
+        "id": "e1c22ade76d0fe6e",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "debug 57",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 5560,
+        "wires": []
+    },
+    {
+        "id": "8e68a4af9fccf03c",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "clear top5 products aggregate",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "bestAgentsRequests[msg.requestId]",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 5860,
+        "wires": [
+            [
+                "d4c26f156aa88694",
+                "e587be5ff722b301"
+            ]
+        ]
+    },
+    {
+        "id": "caa599ba6801db3d",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "9aa2b7aadce40c59",
+        "name": "load agents aggregate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestAggregate",
+                "pt": "msg",
+                "to": "bestAgentsRequests[msg.requestId]",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1200,
+        "y": 5740,
+        "wires": [
+            [
+                "846bd42cdd9b48e5"
             ]
         ]
     }
