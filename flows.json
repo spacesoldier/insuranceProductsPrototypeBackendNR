@@ -133,12 +133,12 @@
             "d5863ee92f3f2502",
             "dddcb50a860b179f",
             "748d2c04bd15077d",
-            "25af4b97e4e2c60b",
             "43cf83ba5a442156",
             "bba6d52e29261bc3",
             "2611e4ad935990f2",
             "b2e4b9f70fd39e1b",
-            "499f6b3b9af6007e"
+            "499f6b3b9af6007e",
+            "e9c894830395f1b2"
         ],
         "x": 14,
         "y": 2139,
@@ -339,6 +339,32 @@
         "y": 379,
         "w": 1052,
         "h": 802
+    },
+    {
+        "id": "791792950f41a2f5",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "b762a07cf0f3a51f",
+            "989f8bc0e9aabd2b",
+            "b2847e5597719393",
+            "70ab926af706c3a6",
+            "fbec2cee5821fb86",
+            "87b58bd6f20f616d"
+        ],
+        "x": 14,
+        "y": 4079,
+        "w": 872,
+        "h": 262
     },
     {
         "id": "3c6b3935308742a0",
@@ -2217,7 +2243,7 @@
         "z": "f4d873b0b812eae0",
         "g": "85d9c313f2c2b597",
         "name": "set url query string",
-        "func": "const baseUrlStr = \"/api/v0/cms-orders\";\n\nlet urlStr = msg.original_req.url;\nlet queryString = urlStr.substring(\n    urlStr.indexOf(baseUrlStr)\n    +\n    baseUrlStr.length\n);\n\nmsg.queryString = queryString;\n\nreturn msg;",
+        "func": "const baseUrlStr = \"/api/v0/cms-orders\";\n\nlet urlStr = msg.original_req.url;\nlet queryString = urlStr.substring(\n    urlStr.indexOf(baseUrlStr)\n    +\n    baseUrlStr.length + 1\n);\n\nmsg.queryString = \"?populate[owner][populate][0]=id\" + queryString;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3005,23 +3031,6 @@
         "wires": []
     },
     {
-        "id": "25af4b97e4e2c60b",
-        "type": "json",
-        "z": "f4d873b0b812eae0",
-        "g": "b138b301e43db445",
-        "name": "",
-        "property": "payload",
-        "action": "obj",
-        "pretty": false,
-        "x": 430,
-        "y": 2360,
-        "wires": [
-            [
-                "d5b2929ef780a004"
-            ]
-        ]
-    },
-    {
         "id": "43cf83ba5a442156",
         "type": "debug",
         "z": "f4d873b0b812eae0",
@@ -3297,12 +3306,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 510,
+        "x": 550,
         "y": 2300,
         "wires": [
             [
-                "4f29c3e47cec1d39",
-                "d5b2929ef780a004"
+                "e9c894830395f1b2"
             ]
         ]
     },
@@ -3603,7 +3611,7 @@
         "z": "f4d873b0b812eae0",
         "g": "85d9c313f2c2b597",
         "name": "filter output by owner id",
-        "func": "let userId = msg.userToken.id\n\nif (msg.payload.data !== undefined){\n    msg.payload.data = msg.payload.data.filter(\n        order => {\n            \n            if (order.attributes.courier !== undefined){\n                let ownerId = order.attributes.courier.data.id;\n                return ownerId === userId;\n            } else {\n                return false;\n            }            \n        }\n    )\n}\n\n\nreturn msg;",
+        "func": "let userId = msg.userToken.id\n\nif (msg.payload.data !== undefined && msg.payload.data !== null){\n    msg.payload.data = msg.payload.data.filter(\n        order => {\n            \n            if (order.attributes.owner !== undefined){\n                let ownerId = order.attributes.owner.data.id;\n                return ownerId === userId;\n            } else {\n                return false;\n            }            \n        }\n    )\n}\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3635,6 +3643,131 @@
         "statusType": "auto",
         "x": 1040,
         "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "e9c894830395f1b2",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "b138b301e43db445",
+        "name": "decode jwt token",
+        "func": "let token = msg.headers.authorization.split(\" \")[1];\n\nmsg.userToken = jwtDecodePack.jwtDecode(token);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jwtDecodePack",
+                "module": "jwt-decode"
+            }
+        ],
+        "x": 590,
+        "y": 2340,
+        "wires": [
+            [
+                "4f29c3e47cec1d39"
+            ]
+        ]
+    },
+    {
+        "id": "b762a07cf0f3a51f",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "get top 5 trending products of all time",
+        "query": "select product_id, count(product_id) as sales from orders\ngroup by product_id\norder by sales desc\nlimit 5;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 570,
+        "y": 4160,
+        "wires": [
+            [
+                "fbec2cee5821fb86"
+            ]
+        ]
+    },
+    {
+        "id": "989f8bc0e9aabd2b",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "debug 42",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 4300,
+        "wires": []
+    },
+    {
+        "id": "b2847e5597719393",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "",
+        "url": "/api/v0/stats/trending-products",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 4160,
+        "wires": [
+            [
+                "b762a07cf0f3a51f"
+            ]
+        ]
+    },
+    {
+        "id": "70ab926af706c3a6",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 810,
+        "y": 4220,
+        "wires": []
+    },
+    {
+        "id": "fbec2cee5821fb86",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "wrap list into dict",
+        "func": "let topProducts = msg.payload;\n\nmsg.payload = {\n    trending: topProducts\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 4220,
+        "wires": [
+            [
+                "70ab926af706c3a6",
+                "989f8bc0e9aabd2b"
+            ]
+        ]
+    },
+    {
+        "id": "87b58bd6f20f616d",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "791792950f41a2f5",
+        "name": "Get top 5 trending products",
+        "info": "",
+        "x": 150,
+        "y": 4120,
         "wires": []
     }
 ]
