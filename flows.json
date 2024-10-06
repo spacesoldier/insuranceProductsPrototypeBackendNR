@@ -73,7 +73,8 @@
             "5accdb55d3f80d0f",
             "aae0afe5d2db34c3",
             "40ef1f779b5acd1c",
-            "379128977e12cac7"
+            "379128977e12cac7",
+            "08512de010ac1e22"
         ],
         "x": 14,
         "y": 2499,
@@ -138,12 +139,13 @@
             "2611e4ad935990f2",
             "b2e4b9f70fd39e1b",
             "499f6b3b9af6007e",
-            "e9c894830395f1b2"
+            "e9c894830395f1b2",
+            "abab57ca978d3268"
         ],
         "x": 14,
         "y": 2139,
         "w": 2132,
-        "h": 302
+        "h": 282
     },
     {
         "id": "85d9c313f2c2b597",
@@ -2503,8 +2505,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 580,
-        "y": 2400,
+        "x": 840,
+        "y": 2380,
         "wires": []
     },
     {
@@ -3225,7 +3227,7 @@
         "z": "f4d873b0b812eae0",
         "g": "770198485702d3f6",
         "name": "insert",
-        "query": "insert into orders (\n    order_id,\n    order_number,\n    status_id,\n    product_id,\n\tamount,\n\tcourier_id,\n\tcreatedat,\n\tupdatedat,\n\tpublishedat\n) \nvalues (\n   {{{ msg.payload.order_id}}},\n   '{{{ msg.payload.order_number}}}',\n   {{{ msg.payload.status_id}}},\n   {{{ msg.payload.product_id}}},\n   {{{\tmsg.payload.amount}}},\n\t{{{msg.payload.courier_id}}},\n\t'{{{msg.payload.createdat}}}',\n\t'{{{msg.payload.updatedat}}}',\n\t'{{{msg.payload.publishedat}}}'\n);\n\ncommit;",
+        "query": "insert into orders (\n    order_id,\n    order_number,\n    status_id,\n    product_id,\n\tamount,\n    owner_id,\n\tcourier_id,\n\tcreatedat,\n\tupdatedat,\n\tpublishedat\n) \nvalues (\n   {{{ msg.payload.order_id}}},\n   '{{{ msg.payload.order_number}}}',\n   {{{ msg.payload.status_id}}},\n   {{{ msg.payload.product_id}}},\n   {{{\tmsg.payload.amount}}},\n\t{{{msg.payload.owner_id}}},\n    {{{msg.payload.courier_id}}},\n\t'{{{msg.payload.createdat}}}',\n\t'{{{msg.payload.updatedat}}}',\n\t'{{{msg.payload.publishedat}}}'\n);\n\ncommit;",
         "postgreSQLConfig": "3c6b3935308742a0",
         "split": false,
         "rowsPerMsg": 1,
@@ -3242,7 +3244,7 @@
         "z": "f4d873b0b812eae0",
         "g": "770198485702d3f6",
         "name": "serialize orders",
-        "func": "msg.payload.data.forEach(order => {\n    let orderRecord = {\n        order_id: order.id,\n        order_number: order.attributes.orderNumber,\n        status_id: order.attributes.status.data.id,\n        product_id: order.attributes.product.data.id,\n        amount: order.attributes.amount,\n        courier_id: order.attributes.courier.data.id,\n        createdat: order.attributes.createdAt,\n        updatedat: order.attributes.updatedAt,\n        publishedat: order.attributes.publishedAt\n    };\n    msg.payload = orderRecord;\n    node.send(msg);\n});\n",
+        "func": "msg.payload.data.forEach(order => {\n    let orderRecord = {\n        order_id: order.id,\n        order_number: order.attributes.orderNumber,\n        status_id: order.attributes.status.data.id,\n        product_id: order.attributes.product.data.id,\n        amount: order.attributes.amount,\n        owner_id: order.attributes.owner.data.id,\n        courier_id: order.attributes.courier.data.id,\n        createdat: order.attributes.createdAt,\n        updatedat: order.attributes.updatedAt,\n        publishedat: order.attributes.publishedAt\n    };\n    msg.payload = orderRecord;\n    node.send(msg);\n});\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3320,7 +3322,7 @@
         "z": "f4d873b0b812eae0",
         "g": "b138b301e43db445",
         "name": "prepare order record",
-        "func": "\nlet orderRecord = {\n    order_id: msg.payload.data.id,\n    order_number: msg.newOrderRec.orderNumber,\n    status_id: msg.newOrderRec.status.id,\n    product_id: msg.newOrderRec.product.id,\n    amount: msg.newOrderRec.amount,\n    courier_id: msg.newOrderRec.courier.user.id,\n    createdat: msg.payload.data.attributes.createdAt,\n    updatedat: msg.payload.data.attributes.updatedAt,\n    publishedat: msg.payload.data.attributes.publishedAt\n};\n\nmsg.payload = orderRecord;\n\nreturn msg;",
+        "func": "\nlet orderRecord = {\n    order_id: msg.payload.data.id,\n    order_number: msg.newOrderRec.orderNumber,\n    status_id: msg.newOrderRec.status.id,\n    product_id: msg.newOrderRec.product.id,\n    amount: msg.newOrderRec.amount,\n    owner_id: msg.userToken.id,\n    courier_id: msg.newOrderRec.courier.user.id,\n    createdat: msg.payload.data.attributes.createdAt,\n    updatedat: msg.payload.data.attributes.updatedAt,\n    publishedat: msg.payload.data.attributes.publishedAt\n};\n\nmsg.payload = orderRecord;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3341,7 +3343,7 @@
         "z": "f4d873b0b812eae0",
         "g": "b138b301e43db445",
         "name": "insert new order",
-        "query": "insert into orders (\n    order_id,\n    order_number,\n    status_id,\n    product_id,\n\tamount,\n\tcourier_id,\n\tcreatedat,\n\tupdatedat,\n\tpublishedat\n) \nvalues (\n   {{{ msg.payload.order_id}}},\n   '{{{ msg.payload.order_number}}}',\n   {{{ msg.payload.status_id}}},\n   {{{ msg.payload.product_id}}},\n   {{{\tmsg.payload.amount}}},\n\t{{{msg.payload.courier_id}}},\n\t'{{{msg.payload.createdat}}}',\n\t'{{{msg.payload.updatedat}}}',\n\t'{{{msg.payload.publishedat}}}'\n);\n\ncommit;",
+        "query": "insert into orders (\n    order_id,\n    order_number,\n    status_id,\n    product_id,\n\tamount,\n    owner_id,\n\tcourier_id,\n\tcreatedat,\n\tupdatedat,\n\tpublishedat\n) \nvalues (\n   {{{ msg.payload.order_id}}},\n   '{{{ msg.payload.order_number}}}',\n   {{{ msg.payload.status_id}}},\n   {{{ msg.payload.product_id}}},\n   {{{\tmsg.payload.amount}}},\n   {{{msg.payload.owner_id}}},\n\t{{{msg.payload.courier_id}}},\n\t'{{{msg.payload.createdat}}}',\n\t'{{{msg.payload.updatedat}}}',\n\t'{{{msg.payload.publishedat}}}'\n);\n\ncommit;",
         "postgreSQLConfig": "3c6b3935308742a0",
         "split": false,
         "rowsPerMsg": 1,
@@ -3391,12 +3393,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 570,
         "y": 2700,
         "wires": [
             [
-                "a6b75dca055de4b3",
-                "8c8d7f95ff43a34a"
+                "08512de010ac1e22"
             ]
         ]
     },
@@ -3406,7 +3407,7 @@
         "z": "f4d873b0b812eae0",
         "g": "a29859a2bed78358",
         "name": "prepare order record",
-        "func": "\nlet orderRecord = {\n    order_id: msg.payload.data.id,\n    order_number: msg.newOrderRec.orderNumber,\n    status_id: msg.newOrderRec.status.id,\n    product_id: msg.newOrderRec.product.id,\n    amount: msg.newOrderRec.amount,\n    courier_id: msg.newOrderRec.courier.user.id,\n    createdat: msg.payload.data.attributes.createdAt,\n    updatedat: msg.payload.data.attributes.updatedAt,\n    publishedat: msg.payload.data.attributes.publishedAt\n};\n\nmsg.payload = orderRecord;\n\nreturn msg;",
+        "func": "\nlet orderRecord = {\n    order_id: msg.payload.data.id,\n    order_number: msg.newOrderRec.orderNumber,\n    status_id: msg.newOrderRec.status.id,\n    product_id: msg.newOrderRec.product.id,\n    amount: msg.newOrderRec.amount,\n    owner_id: msg.userToken.id,\n    courier_id: msg.newOrderRec.courier.user.id,\n    createdat: msg.payload.data.attributes.createdAt,\n    updatedat: msg.payload.data.attributes.updatedAt,\n    publishedat: msg.payload.data.attributes.publishedAt\n};\n\nmsg.payload = orderRecord;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3427,7 +3428,7 @@
         "z": "f4d873b0b812eae0",
         "g": "a29859a2bed78358",
         "name": "update order",
-        "query": "update orders\nset\n    order_number = '{{{ msg.payload.order_number}}}',\n    status_id = {{{ msg.payload.status_id}}},\n    product_id = {{{ msg.payload.product_id}}},\n\tamount = {{{msg.payload.amount}}},\n\tcourier_id = {{{msg.payload.courier_id}}},\n\tcreatedat = '{{{msg.payload.createdat}}}',\n\tupdatedat = '{{{msg.payload.updatedat}}}',\n\tpublishedat = '{{{msg.payload.publishedat}}}'\nwhere\n    order_id = {{{ msg.payload.order_id}}}\n\ncommit;",
+        "query": "update orders\nset\n    order_number = '{{{ msg.payload.order_number}}}',\n    status_id = {{{ msg.payload.status_id}}},\n    product_id = {{{ msg.payload.product_id}}},\n\tamount = {{{msg.payload.amount}}},\n\towner_id = {{{msg.payload.owner_id}}},\n\tcourier_id = {{{msg.payload.courier_id}}},\n\tcreatedat = '{{{msg.payload.createdat}}}',\n\tupdatedat = '{{{msg.payload.updatedat}}}',\n\tpublishedat = '{{{msg.payload.publishedat}}}'\nwhere\n    order_id = {{{ msg.payload.order_id}}}\n\ncommit;",
         "postgreSQLConfig": "3c6b3935308742a0",
         "split": false,
         "rowsPerMsg": 1,
@@ -3667,7 +3668,7 @@
         "y": 2340,
         "wires": [
             [
-                "4f29c3e47cec1d39"
+                "abab57ca978d3268"
             ]
         ]
     },
@@ -3769,5 +3770,54 @@
         "x": 150,
         "y": 4120,
         "wires": []
+    },
+    {
+        "id": "08512de010ac1e22",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "a29859a2bed78358",
+        "name": "decode jwt token",
+        "func": "let token = msg.headers.authorization.split(\" \")[1];\n\nmsg.userToken = jwtDecodePack.jwtDecode(token);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jwtDecodePack",
+                "module": "jwt-decode"
+            }
+        ],
+        "x": 610,
+        "y": 2740,
+        "wires": [
+            [
+                "8c8d7f95ff43a34a",
+                "a6b75dca055de4b3"
+            ]
+        ]
+    },
+    {
+        "id": "abab57ca978d3268",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "b138b301e43db445",
+        "name": "add owner id",
+        "func": "msg.payload.owner = {};\nmsg.payload.owner.id = msg.userToken.id;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 2380,
+        "wires": [
+            [
+                "4f29c3e47cec1d39",
+                "d5b2929ef780a004"
+            ]
+        ]
     }
 ]
