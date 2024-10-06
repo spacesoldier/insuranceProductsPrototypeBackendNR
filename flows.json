@@ -16,6 +16,36 @@
         "env": []
     },
     {
+        "id": "770198485702d3f6",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "5fb9a027c4bd5887",
+            "16c68debb45c94bf",
+            "c45cf15dec2ccee0",
+            "70fca0387ce63b4f",
+            "85515b30229bc9f1",
+            "ddf3e6b20ba8f18e",
+            "d75614fdea85dfe6",
+            "4ff675905985ef5f",
+            "d001464022ffab24",
+            "668a4beab3021c0f"
+        ],
+        "x": 174,
+        "y": 2839,
+        "w": 932,
+        "h": 342
+    },
+    {
         "id": "3c6b3935308742a0",
         "type": "postgreSQLConfig",
         "name": "",
@@ -2782,6 +2812,210 @@
         "statusType": "auto",
         "x": 740,
         "y": 2740,
+        "wires": []
+    },
+    {
+        "id": "5fb9a027c4bd5887",
+        "type": "inject",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 2940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16c68debb45c94bf",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer 696afb45ca89e2f06e9e6b6017408199b48698c52ba6d00bc9dee6f202c57b02ec7fdb5c8b208791b73b2939b0f7605f7cc220b435f7f6d35c64d5b842e05239842f66cd884e1a7d7afc99eafeb88c0f43b7c804f3967f94af719b4edfa21315448f31da729dffbd711572baa78a6b682448d96d51ecdceb45b73ea6c827f177",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 2940,
+        "wires": [
+            [
+                "70fca0387ce63b4f"
+            ]
+        ]
+    },
+    {
+        "id": "c45cf15dec2ccee0",
+        "type": "http request",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://strcmsv4:1337/api/orders{{{queryString}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 730,
+        "y": 3000,
+        "wires": [
+            [
+                "ddf3e6b20ba8f18e"
+            ]
+        ]
+    },
+    {
+        "id": "70fca0387ce63b4f",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "set url query string",
+        "func": "\nmsg.queryString = \"?populate=*\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 3000,
+        "wires": [
+            [
+                "c45cf15dec2ccee0"
+            ]
+        ]
+    },
+    {
+        "id": "85515b30229bc9f1",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "debug 35",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 3040,
+        "wires": []
+    },
+    {
+        "id": "ddf3e6b20ba8f18e",
+        "type": "json",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 710,
+        "y": 3040,
+        "wires": [
+            [
+                "85515b30229bc9f1",
+                "4ff675905985ef5f"
+            ]
+        ]
+    },
+    {
+        "id": "d75614fdea85dfe6",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "insert",
+        "query": "insert into orders (\n    order_id,\n    order_number,\n    status_id,\n    product_id,\n\tamount,\n\tcourier_id,\n\tcreatedat,\n\tupdatedat,\n\tpublishedat\n) \nvalues (\n   {{{ msg.payload.order_id}}},\n   '{{{ msg.payload.order_number}}}',\n   {{{ msg.payload.status_id}}},\n   {{{ msg.payload.product_id}}},\n   {{{\tmsg.payload.amount}}},\n\t{{{msg.payload.courier_id}}},\n\t'{{{msg.payload.createdat}}}',\n\t'{{{msg.payload.updatedat}}}',\n\t'{{{msg.payload.publishedat}}}'\n);\n\ncommit;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1030,
+        "y": 3080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ff675905985ef5f",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "serialize orders",
+        "func": "msg.payload.data.forEach(order => {\n    let orderRecord = {\n        order_id: order.id,\n        order_number: order.attributes.orderNumber,\n        status_id: order.attributes.status.data.id,\n        product_id: order.attributes.product.data.id,\n        amount: order.attributes.amount,\n        courier_id: order.attributes.courier.data.id,\n        createdat: order.attributes.createdAt,\n        updatedat: order.attributes.updatedAt,\n        publishedat: order.attributes.publishedAt\n    };\n    msg.payload = orderRecord;\n    node.send(msg);\n});\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 3080,
+        "wires": [
+            [
+                "d001464022ffab24",
+                "d75614fdea85dfe6"
+            ]
+        ]
+    },
+    {
+        "id": "d001464022ffab24",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "debug 36",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 3140,
+        "wires": []
+    },
+    {
+        "id": "668a4beab3021c0f",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "770198485702d3f6",
+        "name": "fill orders table with existing records from CMS",
+        "info": "",
+        "x": 390,
+        "y": 2880,
         "wires": []
     }
 ]
