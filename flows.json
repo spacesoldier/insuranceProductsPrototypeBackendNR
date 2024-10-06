@@ -146,6 +146,100 @@
         "h": 302
     },
     {
+        "id": "85d9c313f2c2b597",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "0221385a42323bb5",
+            "5da93b7a66402b95",
+            "f4505b82633168d5",
+            "57feb3bff7a24dc3",
+            "79bcaef258ce3084",
+            "d1db3c2e8fffd6c4",
+            "996406ae3945948d",
+            "3e0a3b3c9bb677ca",
+            "37610f9155cbe4ce",
+            "38c3b8c2ace412b3",
+            "7ff0d7df1c98cfc0",
+            "a9acce9c1c0f07c4",
+            "59e7eb9203f9a348",
+            "6ad93ef8b6f34bc5",
+            "963377c648dba080"
+        ],
+        "x": 8.199996948242188,
+        "y": 1139,
+        "w": 1317.8000030517578,
+        "h": 402
+    },
+    {
+        "id": "9440ce2d9caba630",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "3958c61244d0030b",
+            "3742cb90dd47dc47",
+            "fc5e818e6a4e3dfe",
+            "91c517ee5b135557",
+            "24da1d29f9bacdbf",
+            "47cb131eefeee2dd",
+            "855b79714e2586c8",
+            "f2e1ea1a5c7715b3",
+            "541673c062238a0f",
+            "862f999b57a92b5c",
+            "46337a976850cd14",
+            "edb7ce944e2b5784",
+            "04f35c0d4040e8df",
+            "4170909f05e163e1"
+        ],
+        "x": 14,
+        "y": 1599,
+        "w": 1252,
+        "h": 322
+    },
+    {
+        "id": "c77d9d86f5902982",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "4bca0616f6187b3c",
+            "cdb8c1f8c904db2f",
+            "cb0ab6f627f1ddbd",
+            "fb8a058eb6f32afa",
+            "9dee953bc26f8607"
+        ],
+        "x": 134,
+        "y": 3859,
+        "w": 652,
+        "h": 182
+    },
+    {
         "id": "3c6b3935308742a0",
         "type": "postgreSQLConfig",
         "name": "",
@@ -1435,6 +1529,7 @@
         "id": "0221385a42323bb5",
         "type": "http in",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "",
         "url": "/api/v0/cms-orders",
         "method": "get",
@@ -1453,17 +1548,19 @@
         "id": "5da93b7a66402b95",
         "type": "http response",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 810,
-        "y": 1580,
+        "x": 1250,
+        "y": 1440,
         "wires": []
     },
     {
         "id": "f4505b82633168d5",
         "type": "http request",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "",
         "method": "GET",
         "ret": "txt",
@@ -1476,8 +1573,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 770,
-        "y": 1360,
+        "x": 810,
+        "y": 1320,
         "wires": [
             [
                 "79bcaef258ce3084",
@@ -1489,8 +1586,9 @@
         "id": "57feb3bff7a24dc3",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "debug 20",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1506,6 +1604,7 @@
         "id": "79bcaef258ce3084",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "debug 21",
         "active": false,
         "tosidebar": true,
@@ -1515,14 +1614,15 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
-        "y": 1400,
+        "x": 980,
+        "y": 1220,
         "wires": []
     },
     {
         "id": "d1db3c2e8fffd6c4",
         "type": "config",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "init request aggregates",
         "properties": [
             {
@@ -1541,8 +1641,9 @@
         "id": "996406ae3945948d",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "debug 22",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1558,12 +1659,13 @@
         "id": "3e0a3b3c9bb677ca",
         "type": "json",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "",
         "property": "payload",
         "action": "obj",
         "pretty": false,
         "x": 790,
-        "y": 1520,
+        "y": 1400,
         "wires": [
             [
                 "37610f9155cbe4ce",
@@ -1575,6 +1677,7 @@
         "id": "37610f9155cbe4ce",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "debug 23",
         "active": false,
         "tosidebar": true,
@@ -1584,14 +1687,15 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 920,
-        "y": 1520,
+        "x": 1080,
+        "y": 1500,
         "wires": []
     },
     {
         "id": "38c3b8c2ace412b3",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "save original request in msg envelope",
         "rules": [
             {
@@ -1647,6 +1751,7 @@
         "id": "7ff0d7df1c98cfc0",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "restore original request from msg envelope",
         "rules": [
             {
@@ -1675,8 +1780,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 1440,
+        "x": 910,
+        "y": 1360,
         "wires": [
             [
                 "3e0a3b3c9bb677ca"
@@ -1707,6 +1812,7 @@
         "id": "a9acce9c1c0f07c4",
         "type": "comment",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "Get orders  ( Strapi 4 )",
         "info": "",
         "x": 134.1999969482422,
@@ -1714,124 +1820,10 @@
         "wires": []
     },
     {
-        "id": "7eab0f581bb02669",
-        "type": "change",
-        "z": "f4d873b0b812eae0",
-        "name": "save original request to flow",
-        "rules": [
-            {
-                "t": "set",
-                "p": "order_requests[msg._msgid]",
-                "pt": "flow",
-                "to": "{}",
-                "tot": "json",
-                "dc": true
-            },
-            {
-                "t": "set",
-                "p": "order_requests[msg._msgid].payload",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg",
-                "dc": true
-            },
-            {
-                "t": "set",
-                "p": "requestId",
-                "pt": "msg",
-                "to": "_msgid",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "order_requests[msg._msgid].req",
-                "pt": "flow",
-                "to": "req",
-                "tot": "msg",
-                "dc": true
-            },
-            {
-                "t": "set",
-                "p": "order_requests[msg._msgid].res",
-                "pt": "flow",
-                "to": "res",
-                "tot": "msg",
-                "dc": true
-            },
-            {
-                "t": "set",
-                "p": "order_requests[msg._msgid]._msgid",
-                "pt": "flow",
-                "to": "_msgid",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "headers",
-                "pt": "msg",
-                "to": "{}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "headers.authorization",
-                "pt": "msg",
-                "to": "req.headers.authorization",
-                "tot": "msg",
-                "dc": true
-            },
-            {
-                "t": "delete",
-                "p": "req",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 460,
-        "y": 1240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "afdaf1b8b54eef9b",
-        "type": "change",
-        "z": "f4d873b0b812eae0",
-        "name": "restore original request from flow",
-        "rules": [
-            {
-                "t": "set",
-                "p": "req",
-                "pt": "msg",
-                "to": "order_requests[msg.requestId].req",
-                "tot": "flow",
-                "dc": true
-            },
-            {
-                "t": "delete",
-                "p": "order_requests[msg.requestId]",
-                "pt": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 840,
-        "y": 1240,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "3958c61244d0030b",
         "type": "http in",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "",
         "url": "/api/v0/cms-orders/:orderid",
         "method": "get",
@@ -1849,6 +1841,7 @@
         "id": "3742cb90dd47dc47",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "",
         "rules": [
             {
@@ -1876,17 +1869,19 @@
         "id": "fc5e818e6a4e3dfe",
         "type": "http response",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 990,
-        "y": 1960,
+        "x": 1190,
+        "y": 1840,
         "wires": []
     },
     {
         "id": "91c517ee5b135557",
         "type": "http request",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "",
         "method": "GET",
         "ret": "txt",
@@ -1900,7 +1895,7 @@
         "senderr": false,
         "headers": [],
         "x": 950,
-        "y": 1740,
+        "y": 1680,
         "wires": [
             [
                 "24da1d29f9bacdbf",
@@ -1912,6 +1907,7 @@
         "id": "24da1d29f9bacdbf",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "debug 24",
         "active": false,
         "tosidebar": true,
@@ -1922,13 +1918,14 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 940,
-        "y": 1780,
+        "y": 1720,
         "wires": []
     },
     {
         "id": "47cb131eefeee2dd",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "debug 25",
         "active": false,
         "tosidebar": true,
@@ -1946,12 +1943,13 @@
         "id": "855b79714e2586c8",
         "type": "json",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "",
         "property": "payload",
         "action": "obj",
         "pretty": false,
         "x": 970,
-        "y": 1900,
+        "y": 1840,
         "wires": [
             [
                 "f2e1ea1a5c7715b3",
@@ -1963,6 +1961,7 @@
         "id": "f2e1ea1a5c7715b3",
         "type": "debug",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "debug 26",
         "active": false,
         "tosidebar": true,
@@ -1972,14 +1971,15 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1100,
-        "y": 1900,
+        "x": 1060,
+        "y": 1880,
         "wires": []
     },
     {
         "id": "59e7eb9203f9a348",
         "type": "comment",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "Get all orders",
         "info": "",
         "x": 150,
@@ -1990,6 +1990,7 @@
         "id": "541673c062238a0f",
         "type": "comment",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "Get order by id",
         "info": "",
         "x": 160,
@@ -2000,6 +2001,7 @@
         "id": "862f999b57a92b5c",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "restore original request from msg envelope",
         "rules": [
             {
@@ -2029,7 +2031,7 @@
         "to": "",
         "reg": false,
         "x": 1030,
-        "y": 1840,
+        "y": 1780,
         "wires": [
             [
                 "855b79714e2586c8"
@@ -2040,6 +2042,7 @@
         "id": "6ad93ef8b6f34bc5",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "drop payload",
         "rules": [
             {
@@ -2065,6 +2068,7 @@
         "id": "46337a976850cd14",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "drop payload",
         "rules": [
             {
@@ -2090,6 +2094,7 @@
         "id": "963377c648dba080",
         "type": "function",
         "z": "f4d873b0b812eae0",
+        "g": "85d9c313f2c2b597",
         "name": "set url query string",
         "func": "const baseUrlStr = \"/api/v0/cms-orders\";\n\nlet urlStr = msg.original_req.url;\nlet queryString = urlStr.substring(\n    urlStr.indexOf(baseUrlStr)\n    +\n    baseUrlStr.length\n);\n\nmsg.queryString = queryString;\n\nreturn msg;",
         "outputs": 1,
@@ -2099,7 +2104,7 @@
         "finalize": "",
         "libs": [],
         "x": 430,
-        "y": 1400,
+        "y": 1380,
         "wires": [
             [
                 "f4505b82633168d5",
@@ -2111,6 +2116,7 @@
         "id": "edb7ce944e2b5784",
         "type": "function",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "set url query string",
         "func": "const baseUrlStr = \"/api/v0/cms-orders\";\n\nlet urlStr = msg.original_req.url;\nlet queryString = urlStr.substring(\n    urlStr.indexOf(baseUrlStr)\n    +\n    baseUrlStr.length\n);\n\nmsg.queryString = queryString;\n\nreturn msg;",
         "outputs": 1,
@@ -2132,6 +2138,7 @@
         "id": "04f35c0d4040e8df",
         "type": "change",
         "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
         "name": "save original request in msg envelope",
         "rules": [
             {
@@ -3320,6 +3327,140 @@
         "statusType": "auto",
         "x": 2120,
         "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "4bca0616f6187b3c",
+        "type": "change",
+        "z": "f4d873b0b812eae0",
+        "g": "c77d9d86f5902982",
+        "name": "add bearer token v4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.Authorization",
+                "pt": "msg",
+                "to": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI4MTU2MzI5LCJleHAiOjE3MzA3NDgzMjl9.HYceiuslgnpQyaEe0OOuX3IunNT-B0w8-B3JwcTT5IA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 3960,
+        "wires": [
+            [
+                "cb0ab6f627f1ddbd"
+            ]
+        ]
+    },
+    {
+        "id": "cdb8c1f8c904db2f",
+        "type": "inject",
+        "z": "f4d873b0b812eae0",
+        "g": "c77d9d86f5902982",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 3960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb0ab6f627f1ddbd",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "c77d9d86f5902982",
+        "name": "decode jwt token",
+        "func": "\nlet token = msg.headers.Authorization.split(\" \")[1];\n\nmsg.payload = jwtDecodePack.jwtDecode(token);\n\n//msg.token = token;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jwtDecodePack",
+                "module": "jwt-decode"
+            }
+        ],
+        "x": 490,
+        "y": 4000,
+        "wires": [
+            [
+                "fb8a058eb6f32afa"
+            ]
+        ]
+    },
+    {
+        "id": "fb8a058eb6f32afa",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "c77d9d86f5902982",
+        "name": "debug 40",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 4000,
+        "wires": []
+    },
+    {
+        "id": "4170909f05e163e1",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "9440ce2d9caba630",
+        "name": "decode jwt token",
+        "func": "\nlet token = msg.headers.Authorization.split(\" \")[1];\n\nmsg.payload = jwtDecodePack.jwtDecode(token);\n\n//msg.token = token;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jwtDecodePack",
+                "module": "jwt-decode"
+            }
+        ],
+        "x": 350,
+        "y": 1840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9dee953bc26f8607",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "c77d9d86f5902982",
+        "name": "JWT token decode example",
+        "info": "",
+        "x": 280,
+        "y": 3900,
         "wires": []
     }
 ]
