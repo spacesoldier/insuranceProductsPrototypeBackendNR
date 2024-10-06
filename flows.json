@@ -501,6 +501,60 @@
         "h": 422
     },
     {
+        "id": "5e97f5cb14ea44a2",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "6fb18f1311182820",
+            "85e7ddb9ba1919cb",
+            "41c311fab3d562ad",
+            "cc0e2fe95278c5a4",
+            "3da6be22afb026e6",
+            "b2e90c203fb0b4a9",
+            "e4abdedd0c2f7b20"
+        ],
+        "x": 14,
+        "y": 6039,
+        "w": 1212,
+        "h": 222
+    },
+    {
+        "id": "71356ae46e5ddfdd",
+        "type": "group",
+        "z": "f4d873b0b812eae0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "081597ae343cd518",
+            "99e34ed2291b6861",
+            "088cd66fcf4d2d34",
+            "42b6237b8bd42d48",
+            "f1d911f1a2de4d25",
+            "5b46251aa12d042a",
+            "3d3ba4c5b4da76d7"
+        ],
+        "x": 14,
+        "y": 6339,
+        "w": 1212,
+        "h": 222
+    },
+    {
         "id": "3c6b3935308742a0",
         "type": "postgreSQLConfig",
         "name": "",
@@ -5673,6 +5727,244 @@
         "statusType": "auto",
         "x": 1400,
         "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "6fb18f1311182820",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "get revenue between start and end dates",
+        "query": "SELECT \n    DATE(createdat) AS order_date, \n    SUM(amount) AS daily_revenue\nFROM \n    orders\nWHERE \n    DATE(createdat) BETWEEN '{{{msg.req.query.start}}}' AND '{{{msg.req.query.end}}}'\nGROUP BY \n    DATE(createdat)\nORDER BY \n    order_date;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 600,
+        "y": 6140,
+        "wires": [
+            [
+                "41c311fab3d562ad",
+                "3da6be22afb026e6"
+            ]
+        ]
+    },
+    {
+        "id": "85e7ddb9ba1919cb",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "",
+        "url": "/api/v0/stats/daily-revenue",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 6140,
+        "wires": [
+            [
+                "6fb18f1311182820"
+            ]
+        ]
+    },
+    {
+        "id": "41c311fab3d562ad",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "debug 60",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 6220,
+        "wires": []
+    },
+    {
+        "id": "cc0e2fe95278c5a4",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1150,
+        "y": 6140,
+        "wires": []
+    },
+    {
+        "id": "3da6be22afb026e6",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "calc total",
+        "func": "let totalAmount = Number(0);\n\nmsg.payload.forEach(\n    item => {\n        totalAmount += Number(item.daily_revenue);\n    }\n)\n\nmsg.payload = {\n    data: msg.payload,\n    total: totalAmount\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 6140,
+        "wires": [
+            [
+                "cc0e2fe95278c5a4",
+                "b2e90c203fb0b4a9"
+            ]
+        ]
+    },
+    {
+        "id": "b2e90c203fb0b4a9",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "debug 61",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 6220,
+        "wires": []
+    },
+    {
+        "id": "e4abdedd0c2f7b20",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "5e97f5cb14ea44a2",
+        "name": "calc daily revenue between two dates",
+        "info": "",
+        "x": 190,
+        "y": 6080,
+        "wires": []
+    },
+    {
+        "id": "081597ae343cd518",
+        "type": "postgresql",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "get sales count between start and end dates",
+        "query": "SELECT \n    DATE(createdat) AS order_date, \n    count(product_id) AS daily_sales\nFROM \n    orders\nWHERE \n    DATE(createdat) BETWEEN '{{{msg.req.query.start}}}' AND '{{{msg.req.query.end}}}'\nGROUP BY \n    DATE(createdat)\nORDER BY \n    order_date;",
+        "postgreSQLConfig": "3c6b3935308742a0",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 610,
+        "y": 6440,
+        "wires": [
+            [
+                "088cd66fcf4d2d34",
+                "f1d911f1a2de4d25"
+            ]
+        ]
+    },
+    {
+        "id": "99e34ed2291b6861",
+        "type": "http in",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "",
+        "url": "/api/v0/stats/daily-sales",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 6440,
+        "wires": [
+            [
+                "081597ae343cd518"
+            ]
+        ]
+    },
+    {
+        "id": "088cd66fcf4d2d34",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "debug 62",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 6520,
+        "wires": []
+    },
+    {
+        "id": "42b6237b8bd42d48",
+        "type": "http response",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1150,
+        "y": 6440,
+        "wires": []
+    },
+    {
+        "id": "f1d911f1a2de4d25",
+        "type": "function",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "calc total",
+        "func": "let totalSales = Number(0);\n\nmsg.payload.forEach(\n    item => {\n        totalSales += Number(item.daily_sales);\n    }\n)\n\nmsg.payload = {\n    data: msg.payload,\n    total: totalSales\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 6440,
+        "wires": [
+            [
+                "42b6237b8bd42d48",
+                "5b46251aa12d042a"
+            ]
+        ]
+    },
+    {
+        "id": "5b46251aa12d042a",
+        "type": "debug",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "debug 63",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 6520,
+        "wires": []
+    },
+    {
+        "id": "3d3ba4c5b4da76d7",
+        "type": "comment",
+        "z": "f4d873b0b812eae0",
+        "g": "71356ae46e5ddfdd",
+        "name": "calc daily revenue between two dates",
+        "info": "",
+        "x": 190,
+        "y": 6380,
         "wires": []
     }
 ]
